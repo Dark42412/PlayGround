@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#090b10" />
+  <title>ECLIPSE — The Fallen Kingdom</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="game-shell">
+    <canvas id="game-canvas" aria-label="Eclipse 3D action game"></canvas>
+    <div class="vignette"></div>
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">✦</span><span>ECLIPSE</span><i>THE FALLEN KINGDOM</i></div>
+      <div class="mission"><span class="live-dot"></span><span id="mission-name">CHAPTER I · THE ASHEN GATE</span></div>
+      <button class="icon-btn" id="pause-btn" aria-label="Pause">Ⅱ</button>
+    </header>
+    <section class="hud-left">
+      <div class="character-row">
+        <div class="portrait" id="portrait"><span id="portrait-glyph">✧</span></div>
+        <div class="identity"><div class="eyebrow">THE OATHBOUND</div><h1 id="hero-name">CAEL VANE</h1><div class="level-line">LV. <b id="level">01</b><span> · </span><span id="style-name">VOIDBLADE</span></div></div>
+      </div>
+      <div class="bar-wrap"><div class="bar-label"><span>VITALITY</span><span id="hp-text">100 / 100</span></div><div class="bar hp"><i id="hp-fill"></i></div></div>
+      <div class="bar-wrap essence-wrap"><div class="bar-label"><span>UMBRA</span><span id="essence-text">45%</span></div><div class="bar essence"><i id="essence-fill"></i></div></div>
+      <div class="party-switch" aria-label="Switch character"><span class="party-label">OATHBOUND</span><button class="party-slot active" data-char="0"><b>01</b><span>CAEL</span><i></i></button><button class="party-slot" data-char="1"><b>02</b><span>BRANN</span><i></i></button><button class="party-slot" data-char="2"><b>03</b><span>LYRA</span><i></i></button></div>
+    </section>
+    <section class="objective"><div class="objective-icon">⌖</div><div><div class="eyebrow">CURRENT OBJECTIVE</div><strong id="objective-text">BREAK THE ASHEN SEAL</strong><small id="objective-sub">Defeat the corrupted guardians · <span id="enemy-count">0 / 6</span></small></div></section>
+    <section class="combat-readout"><div class="style-rank" id="rank"><span id="rank-letter">D</span><div><b id="rank-word">DREADFUL</b><small>COMBAT RATING</small></div></div><div class="combo-read"><b id="combo-count">0</b><span>HIT<br>CHAIN</span></div></section>
+    <section class="boss-hud hidden" id="boss-hud"><div class="boss-name"><span>✦</span><b>THE HOLLOW WARDEN</b><small id="boss-phase">PHASE I · AWAKENING</small></div><div class="bar bossbar"><i id="boss-fill"></i></div></section>
+    <div class="toast" id="toast"></div>
+    <div class="center-message" id="center-message"></div>
+    <div class="controls-hint" id="controls-hint"><span>W A S D</span> MOVE <i>·</i> <span>J</span> ATTACK <i>·</i> <span>SPACE</span> DODGE <i>·</i> <span>Q</span> ABILITY <i>·</i> <span>1—3</span> SWITCH</div>
+    <div class="touch-controls" id="touch-controls">
+      <div class="move-pad" id="move-pad"><div class="pad-ring"><div class="pad-knob" id="pad-knob"></div></div></div>
+      <div class="touch-actions"><button class="touch-action skill" data-action="special"><span>✦</span><small>UMBRA</small></button><button class="touch-action dodge" data-action="dodge"><span>↗</span><small>EVADE</small></button><button class="touch-action attack" data-action="attack"><span>⚔</span><small>STRIKE</small></button></div>
+    </div>
+    <div class="overlay" id="title-screen">
+      <div class="title-backdrop"></div><div class="title-content">
+        <div class="crest">✦</div><p class="title-kicker">A KINGDOM LOST TO SHADOW</p><h2>ECLIPSE</h2><div class="title-sub">THE FALLEN KINGDOM</div>
+        <p class="title-copy">When the sun was devoured, the old kingdom fell silent.<br>Now the dead are rising—and one oath remains unbroken.</p>
+        <button class="primary-btn" id="begin-btn"><span>ENTER THE ASHEN GATE</span><b>→</b></button>
+        <div class="title-foot"><span>✧</span> A SINGLE-PLAYER DARK FANTASY ACTION RPG <span>✧</span></div>
+        <div class="title-controls"><span>WASD <i>MOVE</i></span><span>J / CLICK <i>STRIKE</i></span><span>SPACE <i>DODGE</i></span><span>Q <i>UMBRA ART</i></span></div>
+      </div>
+    </div>
+    <div class="overlay pause-overlay hidden" id="pause-screen"><div class="pause-card"><p class="eyebrow">THE WORLD HOLDS ITS BREATH</p><h2>PAUSED</h2><p>Take a moment. The shadows will wait.</p><button class="primary-btn" id="resume-btn"><span>RETURN TO BATTLE</span><b>→</b></button><div class="pause-secondary"><button id="restart-btn">RESTART CHAPTER</button><button id="sound-btn">SOUND: ON</button></div></div></div>
+    <div class="overlay end-overlay hidden" id="end-screen"><div class="pause-card"><p class="eyebrow" id="end-eyebrow">CHAPTER COMPLETE</p><h2 id="end-title">THE SEAL IS BROKEN</h2><p id="end-copy">The ashen gate groans open. Beyond it, the kingdom dreams in darkness.</p><div class="reward-row"><span>✦</span><div><b>OATH FRAGMENT</b><small>NEW COMBAT ART UNLOCKED</small></div></div><button class="primary-btn" id="continue-btn"><span>CONTINUE THE JOURNEY</span><b>→</b></button><button class="restart-link" id="again-btn">REPLAY CHAPTER</button></div></div>
+  </main>
+  <script type="module" src="game.js"></script>
+</body>
+</html>
